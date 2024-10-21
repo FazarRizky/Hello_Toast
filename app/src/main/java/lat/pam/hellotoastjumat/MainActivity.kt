@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity() {
         val buttonSwitchPage = findViewById<Button>(R.id.button_pindah)
         val buttonBrowser = findViewById<Button>(R.id.button_browser)
 
+        if( savedInstanceState != null){
+            mCount = savedInstanceState.getInt("COUNT_KEY",0)
+            mShowCount.text =  mCount.toString()
+        }
+
         // Create the observer which updates the UI.
         val nameObserver = Observer<Int> { newName ->
             // Update the UI, in this case, a TextView.
@@ -44,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         buttonCountUp.setOnClickListener(View.OnClickListener {
             mCount = mCount + 1
             if (mShowCount != null)
-                //mShowCount.text = mCount.toString()
+                mShowCount.text = mCount.toString()
                 model.currentName.setValue(mCount)
         })
 
@@ -76,5 +81,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("COUNT_KEY", mCount)
+    }
+
 
 }
